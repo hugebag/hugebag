@@ -1,0 +1,1 @@
+require 'hugebag/railtie' if defined? ::Rails::Railtie
