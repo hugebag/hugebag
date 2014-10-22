@@ -2,10 +2,6 @@ module Hugebag
   module ViewHelpers
     LINK_PATH_SUFFIX = '_path'
 
-    def pre(text)
-      content_tag :pre, text
-    end
-
     def title(page_title)
       content_for(:title) { page_title }
     end
