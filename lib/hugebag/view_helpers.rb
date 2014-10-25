@@ -1,9 +1,5 @@
-# require 'active_support/dependencies'
-
 module Hugebag
   module ViewHelpers
-    # unloadable
-
     NEW_LINK_PREFIX  = 'new_'
     EDIT_LINK_PREFIX = 'edit_'
     LINK_PATH_SUFFIX = '_path'
