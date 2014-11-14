@@ -93,7 +93,7 @@ module Hugebag
                             else
                               value_method_sym
                             end
-      # TODO make it a options hash so that we don't have to display prompt for belong to that's optional
+
       options[:prompt] = t(:select_prompt, :model_name => select_model)
 
       collection = if options[:included_models]
