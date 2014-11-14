@@ -77,6 +77,42 @@ module Hugebag
       link_to link_text, send(models_path), options
     end
 
+    def model_select(object_sym, model_belong_to, value_method_sym, options={})
+      foreign_key_sym     = if options[:foreign_key_sym]
+                              options.extract!(:foreign_key_sym)[:foreign_key_sym]
+                            else
+                              model_belong_to.name.underscore.concat('_id')
+                            end
+      select_model        = if options[:select_model]
+                              options.extract!(:select_model)[:select_model]
+                            else
+                              model_belong_to.send(:model_name).human.downcase
+                            end
+      order_column_string = if options[:order_column_string]
+                              options.extract!(:order_column_string)[:order_column_string]
+                            else
+                              value_method_sym
+                            end
+      # TODO make it a options hash so that we don't have to display prompt for belong to that's optional
+      options[:prompt] = t(:select_prompt, :model_name => select_model)
+
+      collection = if options[:included_models]
+                     included_models = options.extract!(:included_models)[:included_models]
+                     model_belong_to.send(:includes, included_models)
+                   else
+                     model_belong_to.send(:scoped)
+                   end
+
+      collection = collection.send(:order, order_column_string)
+
+      collection_select(object_sym,
+                        foreign_key_sym,
+                        collection,
+                        :id,
+                        value_method_sym,
+                        options)
+    end
+
     private
 
     def model_singular_name(model_class)
