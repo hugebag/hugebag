@@ -30,6 +30,10 @@ module Hugebag
       t(:edit_model_text, :model_name => model_name(model_class))
     end
 
+    def back_link(default_path)
+      link_to t(:back_link), request.referer.present? ? request.referer : default_path
+    end
+
     def root_link
       link_to t(:root_link), root_path
     end
