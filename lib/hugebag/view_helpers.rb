@@ -100,7 +100,7 @@ module Hugebag
                      included_models = options.extract!(:included_models)[:included_models]
                      model_belong_to.send(:includes, included_models)
                    else
-                     model_belong_to.send(:scoped)
+                     model_belong_to.send(:where, nil)
                    end
 
       collection = collection.send(:order, order_column_string)
