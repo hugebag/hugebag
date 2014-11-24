@@ -17,13 +17,13 @@ module Hugebag
       link_to t(:destroy_link), model_instance, :method => :delete, :data => {:confirm => t(:destroy_confirmation)}
     end
 
-    def new_model_link(model_class)
+    def new_model_link(model_class, options={})
       new_model_path = "#{NEW_LINK_PREFIX}#{model_singular_name(model_class)}#{LINK_PATH_SUFFIX}"
-      link_to new_model_text(model_class), send(new_model_path)
+      link_to new_model_text(model_class, options), send(new_model_path)
     end
 
-    def new_model_text(model_class)
-      t(:new_model_text, :model_name => model_name(model_class))
+    def new_model_text(model_class, options={})
+      t(:new_model_text, :model_name => model_name(model_class, options))
     end
 
     def edit_model_text(model_class)
@@ -123,8 +123,13 @@ module Hugebag
       model_class.model_name.singular
     end
 
-    def model_name(model_class)
-      model_class.model_name.human.downcase
+    def model_name(model_class, options={})
+      model_human_name = model_class.model_name.human
+      if options[:downcase] == false
+        model_human_name
+      else
+        model_human_name.downcase
+      end
     end
   end
 end
