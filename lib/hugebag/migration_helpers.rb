@@ -6,6 +6,10 @@ module MigrationHelpers
     add_index(table_name, column_name, :unique => true, :name => unique_index_name(column_name))
   end
 
+  def remove_unique_index(table_name, column_name)
+    remove_index(table_name, :name => unique_index_name(column_name))
+  end
+
   def unique_index_name(column_name)
     if column_name.is_a? Symbol
       column_name.to_s.concat(UNIQUE_INDEX_SUFFIX)
