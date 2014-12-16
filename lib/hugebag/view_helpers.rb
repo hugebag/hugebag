@@ -82,21 +82,23 @@ module Hugebag
     end
 
     def model_select(object_sym, model_belong_to, value_method_sym, options={})
-      foreign_key_sym     = if options[:foreign_key_sym]
-                              options.extract!(:foreign_key_sym)[:foreign_key_sym]
-                            else
-                              model_belong_to.name.underscore.concat('_id')
-                            end
-      select_model        = if options[:select_model]
-                              options.extract!(:select_model)[:select_model]
-                            else
-                              model_belong_to.send(:model_name).human.downcase
-                            end
-      order_column_string = if options[:order_column_string]
-                              options.extract!(:order_column_string)[:order_column_string]
-                            else
-                              value_method_sym
-                            end
+      foreign_key_sym = if options[:foreign_key_sym]
+                          options.extract!(:foreign_key_sym)[:foreign_key_sym]
+                        else
+                          model_belong_to.name.underscore.concat('_id')
+                        end
+      select_model    = if options[:select_model]
+                          options.extract!(:select_model)[:select_model]
+                        else
+                          model_belong_to.send(:model_name).human.downcase
+                        end
+      order_column    = if options[:order_column_string] # Use :order_column instead
+                          options.extract!(:order_column_string)[:order_column_string]
+                        elsif options[:order_column]
+                          options.extract!(:order_column)[:order_column]
+                        else
+                          value_method_sym
+                        end
 
       options[:prompt] = t(:select_prompt, :model_name => select_model)
 
@@ -107,7 +109,7 @@ module Hugebag
                      model_belong_to.send(:where, nil)
                    end
 
-      collection = collection.send(:order, order_column_string)
+      collection = collection.send(:order, order_column)
 
       collection_select(object_sym,
                         foreign_key_sym,
