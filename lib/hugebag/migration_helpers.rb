@@ -23,7 +23,13 @@ module MigrationHelpers
     execute "ALTER TABLE `#{child_table}` DROP FOREIGN KEY `#{foreign_key_name}`"
   end
 
+  # @deprecated Use default_foreign_key_name
   def foreign_key_name(child_table, parent_table, foreign_key_number = '1')
+    "#{FOREIGN_KEY_PREFIX}#{child_table}_#{parent_table}#{foreign_key_number}"
+  end
+
+  # Cannot use the method name 'foreign_key_name' as it collides with the one in ActiveRecord 4.2
+  def default_foreign_key_name(child_table, parent_table, foreign_key_number = '1')
     "#{FOREIGN_KEY_PREFIX}#{child_table}_#{parent_table}#{foreign_key_number}"
   end
 end
