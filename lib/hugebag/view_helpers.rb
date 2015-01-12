@@ -38,6 +38,10 @@ module Hugebag
       link_to t(:root_link), root_path
     end
 
+    def parent_link(parent, parent_name_method = :name)
+      link_to parent.send(parent_name_method), parent
+    end
+
     # @deprecated Use models_link instead
     def link_to_models(model_class, options={})
       model_name = model_class.model_name
