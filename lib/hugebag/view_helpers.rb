@@ -119,6 +119,12 @@ module Hugebag
                         options)
     end
 
+    # handy method for simple_form input that needs a hint
+    def hinted_input(form, attribute, hint, options={})
+      options[:label] = false
+      [form.label(attribute), form.hint(hint), form.input(attribute, options)].join.html_safe
+    end
+
     private
 
     def model_singular_name(model_class)
