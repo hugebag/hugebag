@@ -90,6 +90,11 @@ module Hugebag
       link_to link_text, send(models_path), options
     end
 
+    # Use this method if a date may be nil
+    def ldate(dt, args = nil)
+      dt ? l(dt, args) : nil
+    end
+
     def model_select(object_sym, model_belong_to, value_method_sym, options={})
       foreign_key_sym = if options[:foreign_key_sym]
                           options.extract!(:foreign_key_sym)[:foreign_key_sym]
