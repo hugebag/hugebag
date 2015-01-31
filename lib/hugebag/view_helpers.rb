@@ -3,6 +3,7 @@ module Hugebag
     NEW_LINK_PREFIX  = 'new_'
     EDIT_LINK_PREFIX = 'edit_'
     LINK_PATH_SUFFIX = '_path'
+    POUND_UNIT       = 'lb'
 
     def show_link(model_instance)
       link_to t(:show_link), model_instance
@@ -45,6 +46,10 @@ module Hugebag
 
     def model_link(model, model_name_method = :name)
       link_to model.send(model_name_method), model
+    end
+
+    def model_link_if(model, model_name_method = :name)
+      link_to_if model, model.send(:try, model_name_method), model
     end
 
     # @deprecated Use models_link instead
@@ -139,6 +144,10 @@ module Hugebag
       [form.label(attribute), form.hint(hint), form.input(attribute, options)].join.html_safe
     end
 
+    def number_to_pound(number)
+      number_with_unit(number, POUND_UNIT)
+    end
+
     private
 
     def model_singular_name(model_class)
@@ -152,6 +161,12 @@ module Hugebag
       else
         model_human_name.downcase
       end
+    end
+
+    def number_with_unit(number, unit)
+      return unless number
+      display_unit = (number.to_f > 1) ? unit.pluralize : unit
+      "#{number} #{display_unit}"
     end
   end
 end
