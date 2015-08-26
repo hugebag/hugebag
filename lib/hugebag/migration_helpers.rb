@@ -19,7 +19,7 @@ module MigrationHelpers
   end
 
   def drop_foreign_key(child_table, parent_table, foreign_key_number = '1')
-    foreign_key_name = foreign_key_name(child_table, parent_table, foreign_key_number)
+    foreign_key_name = default_foreign_key_name(child_table, parent_table, foreign_key_number)
     execute "ALTER TABLE `#{child_table}` DROP FOREIGN KEY `#{foreign_key_name}`"
   end
 
