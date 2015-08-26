@@ -27,8 +27,8 @@ module Hugebag
       t(:new_model_text, :model_name => model_name(model_class, options))
     end
 
-    def edit_model_text(model_class)
-      t(:edit_model_text, :model_name => model_name(model_class))
+    def edit_model_text(model_class, options={})
+      t(:edit_model_text, :model_name => model_name(model_class, options))
     end
 
     def back_link(default_path)
