@@ -52,6 +52,13 @@ module Hugebag
       link_to_if model, model.send(:try, model_name_method), model
     end
 
+    def children_link(parent_instance_var, child_class, options={})
+      link_text        = options[:link_name] ? options[:link_name] : child_class.model_name.human.pluralize
+      path_method_name = "#{parent_instance_var.class.name.underscore}_#{child_class.name.underscore.pluralize}_path"
+      path             = send(path_method_name, parent_instance_var)
+      link_to link_text, path
+    end
+
     # @deprecated Use models_link instead
     def link_to_models(model_class, options={})
       model_name = model_class.model_name
